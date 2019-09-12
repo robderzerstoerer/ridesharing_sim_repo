@@ -39,7 +39,7 @@ constexpr double pi = 3.14159265358979323846;
 //everything is independent of the destination of a request (constant maximal waiting time for all requests, indiscriminate service of all requests)
 int main(int argc, char* argv[])
 {
-	std::string topology = "torus";
+	std::string topology = "torus"; // new comm
 	ULL number_of_buses = 100;
 	ULL number_of_nodes = 25;
 	double normalized_request_rate = 7.5;
