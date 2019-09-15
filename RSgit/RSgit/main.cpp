@@ -206,7 +206,7 @@ int main(int argc, char* argv[])
 	sim.run_sim_requests(std::max((ULL)10000, 100 * number_of_buses));
 
 	//output results
-	sim.print_params(out);
+	sim.print_params(out, true);
 	sim.print_measurements(out);
 
 	out.close();

@@ -49,7 +49,7 @@ public:
 
 	double execute_next_event();
 
-	void print_params(std::ofstream& out);
+	void print_params(std::ofstream& out, bool readable = false);
 
 	traffic_network network;
 	std::vector<transporter> transporter_list;
