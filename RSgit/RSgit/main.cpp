@@ -15,10 +15,13 @@
 #include <vector>
 #include <cmath>
 #include <random>
-
 #include <cassert>
 
+#include "matplotlib.h"
+namespace plt = matplotlibcpp;
+
 #include "ridesharing_sim.h"
+
 
 #ifndef _INTEGER_TYPES
 #define ULL uint64_t
@@ -39,13 +42,16 @@ constexpr double pi = 3.14159265358979323846;
 //everything is independent of the destination of a request (constant maximal waiting time for all requests, indiscriminate service of all requests)
 int main(int argc, char* argv[])
 {
-	std::string topology = "torus"; 
+	plt::plot({ 1,3,2,4 });
+	plt::show();
+
+	std::string topology = "torus";
 	ULL number_of_buses = 100;
 	ULL number_of_nodes = 25;
 	double normalized_request_rate = 7.5;
 
 	std::stringstream filename("");
-	filename << topology + "_N_25__B_100__x_7.5.dat";
+	filename << topology << "_N_" << number_of_nodes << "__B_" << number_of_buses << "__x_" << normalized_request_rate << ".dat";
 	std::ofstream out(filename.str().c_str());
 
 	//initialize simulation class
@@ -88,24 +94,24 @@ int main(int argc, char* argv[])
 		{
 			//create a square lattice first
 			unsigned int L = sqrt(number_of_nodes);
-			if (i%L != L - 1)
+			if (i % L != L - 1)
 			{
 				sim.network.add_link(i, i + 1, 1);
 				sim.network.add_link(i + 1, i, 1);
 			}
-			if (i < L*(L - 1))
+			if (i < L * (L - 1))
 			{
 				sim.network.add_link(i, i + L, 1);
 				sim.network.add_link(i + L, i, 1);
 			}
 
 			//add periodic boundaries
-			if (i%L == L - 1)
+			if (i % L == L - 1)
 			{
 				sim.network.add_link(i, i + 1 - L, 1);
 				sim.network.add_link(i + 1 - L, i, 1);
 			}
-			if (i >= L*(L - 1))
+			if (i >= L * (L - 1))
 			{
 				sim.network.add_link(i, (i + L) % number_of_nodes, 1);
 				sim.network.add_link((i + L) % number_of_nodes, i, 1);
@@ -201,12 +207,12 @@ int main(int argc, char* argv[])
 	//this may not be long enough if the initial request list was too long or the network is large, some try-and-error may be needed here
 	sim.run_sim_requests(std::max((ULL)1000, 10 * number_of_buses));
 	//turn on measurements with a given step size, measure every (number of buses) requests for a total of ~ 100 measurements
-	sim.enable_measurements((1.0*number_of_buses) / sim.request_rate);
+	sim.enable_measurements((1.0 * number_of_buses) / sim.request_rate);
 	//simulate (and measure) for 100 requests per bus (at least 10000 requests)
 	sim.run_sim_requests(std::max((ULL)10000, 100 * number_of_buses));
 
 	//output results
-	sim.print_params(out);
+	sim.print_params(out, true);
 	sim.print_measurements(out);
 
 	out.close();

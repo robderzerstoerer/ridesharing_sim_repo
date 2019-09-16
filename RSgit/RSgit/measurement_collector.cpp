@@ -67,24 +67,76 @@ void measurement_collector::reset()
 
 }
 
-void measurement_collector::print(std::ofstream& out)
+void measurement_collector::print(std::ofstream& out, bool readable)
 {
-	out << std::endl << "print" << std::endl;
-	wait_time.print(out);
-	drive_time.print(out);
-	delay_time.print(out);
-	fraction_of_delayed_trips.print(out);
+	if (!readable)
+	{
+		wait_time.print(out);
+		drive_time.print(out);
+		delay_time.print(out);
+		fraction_of_delayed_trips.print(out);
 
-	drive_time_between_stops.print(out);
-	drive_distance_between_stops.print(out);
+		drive_time_between_stops.print(out);
+		drive_distance_between_stops.print(out);
 
-	occupancy.print(out);
-	scheduled_customers.print(out);
-	number_of_planned_stops.print(out);
-	planned_time_horizon.print(out);
-	number_of_idle_transporters.print(out);
+		occupancy.print(out);
+		scheduled_customers.print(out);
+		number_of_planned_stops.print(out);
+		planned_time_horizon.print(out);
+		number_of_idle_transporters.print(out);
 
-	out << std::endl;
+		out << std::endl;
+	}
+	else
+	{
+		out << "MEASUREMENTS" << std::endl << std::endl;
+
+		out << "wait_time: " << std::endl;
+		wait_time.print(out);
+		out << std::endl;
+
+		out << "drive_time: " << std::endl;
+		drive_time.print(out);
+		out << std::endl;
+
+		out << "delay_time: " << std::endl;
+		delay_time.print(out);
+		out << std::endl;
+
+		out << "fraction_of_delayed_trips: " << std::endl;
+		fraction_of_delayed_trips.print(out);
+		out << std::endl;
+
+		out << "drive_time_between_stops: " << std::endl;
+		drive_time_between_stops.print(out);
+		out << std::endl;
+
+		out << "drive_distance_between_stops: " << std::endl;
+		drive_distance_between_stops.print(out);
+		out << std::endl;
+
+		out << "occupancy:" << std::endl;
+		occupancy.print(out);
+		out << std::endl;
+
+		out << "scheduled_customers: " << std::endl;
+		scheduled_customers.print(out);
+		out << std::endl;
+
+		out << "number_of_planned_stops: " << std::endl;
+		number_of_planned_stops.print(out);
+		out << std::endl;
+
+		out << "planned_time_horizon: " << std::endl;
+		planned_time_horizon.print(out);
+		out << std::endl;
+
+		out << "number_of_idle_transporters: " << std::endl;
+		number_of_idle_transporters.print(out);
+		out << std::endl;
+
+		out << std::endl;
+	}
 }
 
 void measurement_collector::new_measurement(measure& m, long double val)

@@ -54,20 +54,38 @@ void ridesharing_sim::reset_measurements()
 //output measurements
 void ridesharing_sim::print_measurements(std::ofstream& out)
 {
-	measurements.print(out);
+	measurements.print(out, true);
 }
 
 //output parameters of the simulation
-void ridesharing_sim::print_params(std::ofstream& out)
+void ridesharing_sim::print_params(std::ofstream& out, bool readable)
 {
 	double total_velocity = 0;
 	for (transporter& t : transporter_list)
 		total_velocity += t.get_velocity();
 
-	out << time - start_of_measured_time << '\t' << total_requests - start_of_measured_total_requests << '\t' << total_serviced_requests - start_of_measured_serviced_requests << '\t' 		//simulation time
-		<< transporter_list.size() << '\t' << request_rate << '\t' << normalized_request_rate << '\t'		//simulation parameters
-		<< network.get_mean_pickup_distance() << '\t' << network.get_mean_dropoff_distance() << '\t' << network.get_request_asymmetry() << '\t'	//network parameters
-		<< total_velocity << '\t';
+	if (!readable)
+	{
+		out << time - start_of_measured_time << '\t' << total_requests - start_of_measured_total_requests << '\t' << total_serviced_requests - start_of_measured_serviced_requests << '\t' 		//simulation time
+			<< transporter_list.size() << '\t' << request_rate << '\t' << normalized_request_rate << '\t'		//simulation parameters
+			<< network.get_mean_pickup_distance() << '\t' << network.get_mean_dropoff_distance() << '\t' << network.get_request_asymmetry() << '\t'	//network parameters
+			<< total_velocity << '\t';
+	}
+	else
+	{
+		out << "PARAMS" << std::endl << std::endl <<
+			"time - start_of_measured_time" << std::endl << time - start_of_measured_time << std::endl <<
+			"total_requests - start_of_measured_total_requests" << std::endl << total_requests - start_of_measured_total_requests << std::endl <<
+			"total_serviced_requests - start_of_measured_serviced_requests" << std::endl << total_serviced_requests - start_of_measured_serviced_requests << std::endl <<
+			"transporter_list.size()" << std::endl << transporter_list.size() << std::endl <<
+			"request_rate" << std::endl << request_rate << std::endl <<
+			"normalized_request_rate" << std::endl << normalized_request_rate << std::endl <<
+			"network.get_mean_pickup_distance()" << std::endl << network.get_mean_pickup_distance() << std::endl <<
+			"network.get_mean_dropoff_distance()" << std::endl << network.get_mean_dropoff_distance() << std::endl <<
+			"network.get_request_asymmetry()" << std::endl << network.get_request_asymmetry() << std::endl <<
+			"total_velocity" << std::endl << total_velocity << std::endl <<
+			std::endl;
+	}
 }
 
 //set normalized request rate and corresponding absolute request rate

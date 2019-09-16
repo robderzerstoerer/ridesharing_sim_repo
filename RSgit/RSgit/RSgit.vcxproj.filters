@@ -30,6 +30,9 @@
     <ClInclude Include="transporter.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="matplotlib.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="customer.cpp">

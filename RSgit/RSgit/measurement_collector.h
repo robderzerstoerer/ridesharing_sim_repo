@@ -43,7 +43,7 @@ public:
 	void measure_trip(std::pair<ULL, double> last_stop, std::pair<ULL, double> current_stop);
 	void measure_system_status(std::vector<transporter>& transporter_list, double time);
 	void reset();
-	void print(std::ofstream& out);
+	void print(std::ofstream& out, bool readable = false);
 
 protected:
 
